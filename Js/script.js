@@ -2,8 +2,8 @@ var siteName = document.getElementById("bookmarkName");
 var siteURL = document.getElementById("bookmarkURL");
 var submitBtn = document.getElementById("submitBtn");
 var tableContent = document.getElementById("tableContent");
-var deleteBtns;
-var visitBtns;
+var deleteBtn;
+var visitBtn;
 var closeBtn = document.getElementById("closeBtn");
 var boxModal = document.querySelector(".box-info");
 var bookmarks = [];
@@ -49,37 +49,33 @@ function displayBookmark(indexOfWebsite) {
             `;
   tableContent.innerHTML += newBookmark;
 
-  // =====> Adding Click Event to All delete buttons every time a new bookmark being added
 
-  deleteBtns = document.querySelectorAll(".btn-delete");
-  if (deleteBtns) {
-    for (var j = 0; j < deleteBtns.length; j++) {
-      deleteBtns[j].addEventListener("click", function (e) {
+  deleteBtn = document.querySelectorAll(".btn-delete");
+  if (deleteBtn) {
+    for (var i = 0; i < deleteBtn.length; i++) {
+      deleteBtn[i].addEventListener("click", function (e) {
         deleteBookmark(e);
       });
     }
   }
 
-  // =====> Adding Click Event to All visit buttons every time a new bookmark being added
 
-  visitBtns = document.querySelectorAll(".btn-visit");
-  if (visitBtns) {
-    for (var l = 0; l < visitBtns.length; l++) {
-      visitBtns[l].addEventListener("click", function (e) {
+  visitBtn = document.querySelectorAll(".btn-visit");
+  if (visitBtn) {
+    for (let i = 0; i < visitBtn.length; i++) {
+      visitBtn[i].addEventListener("click", function (e) {
         visitWebsite(e);
       });
     }
   }
 }
 
-// =====> Clear Input Function
 
 function clearInput() {
   siteName.value = "";
   siteURL.value = "";
 }
 
-// =====> Capitalize Function ==> take string and makes it capitalize
 
 function capitalize(str) {
   let strArr = str.split("");
@@ -87,12 +83,11 @@ function capitalize(str) {
   return strArr.join("");
 }
 
-// =====> Submit Function
 
 submitBtn.addEventListener("click", function () {
   if (
-    siteName.classList.contains("is-valid") &&
-    siteURL.classList.contains("is-valid")
+    siteName.classList.contains("valid") &&
+    siteURL.classList.contains("valid")
   ) {
     var bookmark = {
       siteName: capitalize(siteName.value),
@@ -102,14 +97,13 @@ submitBtn.addEventListener("click", function () {
     localStorage.setItem("bookmarksList", JSON.stringify(bookmarks));
     displayBookmark(bookmarks.length - 1);
     clearInput();
-    siteName.classList.remove("is-valid");
-    siteURL.classList.remove("is-valid");
+    siteName.classList.remove("valid");
+    siteURL.classList.remove("valid");
   } else {
     boxModal.classList.remove("d-none");
   }
 });
 
-// =====> Delete Function
 
 function deleteBookmark(e) {
   tableContent.innerHTML = "";
@@ -121,7 +115,6 @@ function deleteBookmark(e) {
   localStorage.setItem("bookmarksList", JSON.stringify(bookmarks));
 }
 
-// =====> Visit Function
 
 function visitWebsite(e) {
   var websiteIndex = e.target.dataset.index;
@@ -147,13 +140,13 @@ siteURL.addEventListener("input", function () {
 });
 
 function validate(element, regex) {
-  var testRegex = regex;
-  if (testRegex.test(element.value)) {
-    element.classList.add("is-valid");
-    element.classList.remove("is-invalid");
+  var Regex = regex;
+  if (Regex.test(element.value)) {
+    element.classList.add("valid");
+    element.classList.remove("inValid");
   } else {
-    element.classList.add("is-invalid");
-    element.classList.remove("is-valid");
+    element.classList.add("inValid");
+    element.classList.remove("valid");
   }
 }
 
@@ -167,14 +160,4 @@ function closeModal() {
 
 closeBtn.addEventListener("click", closeModal);
 
-document.addEventListener("keydown", function (e) {
-  if (e.key == "Escape") {
-    closeModal();
-  }
-});
 
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("box-info")) {
-    closeModal();
-  }
-});

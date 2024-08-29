@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=PT+Sans+Caption:wght@400;700&family=Pacifico&family=Righteous&family=Saira+Condensed:wght@300;400;500;600;700;800&display=swap");
-
 body {
   font-family: "PT Sans Caption", sans-serif;
 }
@@ -47,8 +45,6 @@ main h1:hover::before {
   font-family: "Righteous", cursive;
   font-size: 25px;
   background-image: linear-gradient(to right, #3ca55c, #b5ac49);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .form-control:focus {
